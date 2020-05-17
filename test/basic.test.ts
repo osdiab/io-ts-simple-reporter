@@ -15,7 +15,7 @@ test('formats a top-level primitve type correctly', (t) => {
 	const result = PrimitiveType.decode(42);
 
 	t.deepEqual(reporter.report(result), [
-		'Expecting value of type "string" but instead got value: 42'
+		'Expecting value of type string but instead got value: 42'
 	]);
 });
 
@@ -24,7 +24,7 @@ test('formats array items', (t) => {
 	const result = NumberGroups.decode({});
 
 	t.deepEqual(reporter.report(result), [
-		'Expecting value of type "Array<Array<number>>" but instead got value: {}'
+		'Expecting value of type Array<Array<number>> but instead got value: {}'
 	]);
 });
 
@@ -33,7 +33,7 @@ test('formats nested array item mismatches correctly', (t) => {
 	const result = NumberGroups.decode([[{}]]);
 
 	t.deepEqual(reporter.report(result), [
-		'Expecting value of type "number" at path "0.0" but instead got value: {}'
+		'Expecting value of type number at path "0.0" but instead got value: {}'
 	]);
 });
 
@@ -55,10 +55,10 @@ test('formats a complex type correctly', (t) => {
 	});
 
 	t.deepEqual(reporter.report(result), [
-		'Expecting value of type "number" at path "age" but instead got value: undefined',
-		'Expecting value of type ""Male"" at path "gender.0" but instead got value: undefined',
-		'Expecting value of type ""Female"" at path "gender.1" but instead got value: undefined',
-		'Expecting value of type ""Male"" at path "children.0.gender.0" but instead got value: "Whatever"',
-		'Expecting value of type ""Female"" at path "children.0.gender.1" but instead got value: "Whatever"'
+		'Expecting value of type number at path "age" but instead got value: undefined',
+		'Expecting value of type "Male" at path "gender.0" but instead got value: undefined',
+		'Expecting value of type "Female" at path "gender.1" but instead got value: undefined',
+		'Expecting value of type "Male" at path "children.0.gender.0" but instead got value: "Whatever"',
+		'Expecting value of type "Female" at path "children.0.gender.1" but instead got value: "Whatever"'
 	]);
 });
