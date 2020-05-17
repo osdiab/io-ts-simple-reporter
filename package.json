@@ -2,7 +2,7 @@
   "name": "io-ts-simple-reporter",
   "version": "0.0.1",
   "description": "Readable output for io-ts errors",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "repository": "https://github.com/osdiab/io-ts-simple-reporter",
   "author": "Omar Diab <me@omardiab.com>",
   "license": "MIT",
@@ -10,18 +10,46 @@
   "files": [
     "dist"
   ],
+  "sideEffects": false,
+  "types": "dist/src",
   "devDependencies": {
     "ava": "^3.8.2",
+    "concurrently": "^5.2.0",
+    "io-ts": "^2.2.2",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.1",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.2",
     "xo": "^0.30.0"
   },
   "scripts": {
     "test": "ava",
     "lint": "xo",
-    "build": "xo && ava && tsc",
+    "build": "concurrently -n \"lint,test\" \"yarn lint\" \"yarn test\" && yarn build:clean && tsc",
+    "build:clean": "rimraf dist",
     "deploy": "yarn build && npm publish"
   },
   "peerDependencies": {
     "io-ts": "^2.2.2"
+  },
+  "dependencies": {
+    "fp-ts": "^2.6.1"
+  },
+  "xo": {
+    "rules": {
+      "@typescript-eslint/prefer-readonly-parameter-types": "off"
+    }
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "files": [
+      "test/**/*.test.ts"
+    ],
+    "require": [
+      "ts-node/register",
+      "tsconfig-paths/register"
+    ]
   }
 }
