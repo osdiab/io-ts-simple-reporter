@@ -36,6 +36,7 @@
     "fp-ts": "^2.6.1"
   },
   "xo": {
+    "prettier": true,
     "rules": {
       "@typescript-eslint/prefer-readonly-parameter-types": "off"
     }
