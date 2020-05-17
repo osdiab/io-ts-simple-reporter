@@ -1,40 +1,27 @@
 import {Reporter} from 'io-ts/lib/Reporter';
-import {Errors, ValidationError, ContextEntry, InterfaceType, PartialType, Props} from 'io-ts';
+import {ValidationError} from 'io-ts';
 import {fold} from 'fp-ts/lib/Either';
 
-function isInterfaceType(type: { _tag: string } | ContextEntry['type']): type is InterfaceType<Props> {
-	return '_tag' in type && type._tag === 'InterfaceType';
-}
-
-function isPartialType(type: { _tag: string } | ContextEntry['type']): type is PartialType<Props> {
-	return '_tag' in type && type._tag === 'PartialType';
-}
-
 function printError(error: ValidationError): string {
-	return error.context.reduce((output, ctxValue) => {
-		console.log('error', error);
-		if (isInterfaceType(ctxValue.type)) {
-			return `${output}${ctxValue.key}${ctxValue.key && '.'}`;
-		}
+	const path = error.context
+		.map((c) => c.key)
+		.filter((key) => key.length > 0)
+		.join('.');
 
-		if (isPartialType(ctxValue.type)) {
-			return `${output}${ctxValue.key}${ctxValue.key && '.'}`;
-		}
+	// The actual error is last in context
+	const errorContext = error.context[error.context.length - 1];
 
-		return `${output}${ctxValue.key}: ${error.message ?? 'something was wrong'}`;
-	}, '');
+	const expectedType = errorContext.type.name;
+	return `Expecting ${expectedType}${
+		path === '' ? '' : ` at ${path}`
+	} but instead got: ${
+		error.value === undefined ? 'undefined' : JSON.stringify(error.value)
+	}`;
 }
 
-export function failure(errors: Errors) {
-	return errors.map(error => printError(error));
-}
-
-export function success() {
-	return ['No errors!'];
-}
-
-const reporter: Reporter<string[]> = {
-	report: fold(failure, success)
+export const reporter: Reporter<string[]> = {
+	report: fold(
+		(errors) => errors.map((error) => printError(error)),
+		() => []
+	)
 };
-
-export default reporter;
