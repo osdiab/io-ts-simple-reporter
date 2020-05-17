@@ -6,5 +6,13 @@
   "repository": "https://github.com/osdiab/io-ts-simple-reporter",
   "author": "Omar Diab <me@omardiab.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "ava": "^3.8.2",
+    "typescript": "^3.9.2",
+    "xo": "^0.30.0"
+  },
+  "scripts": {
+    "test": "ava"
+  }
 }
