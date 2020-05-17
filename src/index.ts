@@ -12,9 +12,9 @@ function printError(error: ValidationError): string {
 	const errorContext = error.context[error.context.length - 1];
 
 	const expectedType = errorContext.type.name;
-	return `Expecting ${expectedType}${
-		path === '' ? '' : ` at ${path}`
-	} but instead got: ${
+	return `Expecting value of type "${expectedType}"${
+		path === '' ? '' : ` at path "${path}"`
+	} but instead got value: ${
 		error.value === undefined ? 'undefined' : JSON.stringify(error.value)
 	}`;
 }
