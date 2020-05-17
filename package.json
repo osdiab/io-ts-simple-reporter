@@ -1,0 +1,10 @@
+{
+  "name": "io-ts-simple-reporter",
+  "version": "0.0.1",
+  "description": "Readable output for io-ts errors",
+  "main": "dist/index.js",
+  "repository": "https://github.com/osdiab/io-ts-simple-reporter",
+  "author": "Omar Diab <me@omardiab.com>",
+  "license": "MIT",
+  "private": false
+}
